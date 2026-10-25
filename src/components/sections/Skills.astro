@@ -1,0 +1,90 @@
+---
+import type { Locale, Profile } from '@/types/profile';
+import { useTranslations } from '@/i18n/ui';
+import Section from '@/components/ui/Section.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+}
+
+const { locale, profile } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id="skills" title={t.sections.skills}>
+  <div class="skills">
+    {profile.skills.map((group, i) => (
+      <article class="skills__group" data-reveal data-spotlight style={`--i:${i}`}>
+        <h3>{group.title}</h3>
+        <ul class="skills__list">
+          {group.items.map((item) => (
+            <Tag>{item}</Tag>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-6);
+  }
+
+  .skills__group {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    /* The reveal transition from global.css is repeated here so hover effects can be added. */
+    transition:
+      opacity 700ms var(--ease) calc(var(--i, 0) * 90ms),
+      transform 700ms var(--ease) calc(var(--i, 0) * 90ms),
+      translate 300ms var(--ease),
+      border-color 300ms var(--ease),
+      box-shadow 300ms var(--ease);
+  }
+
+  /* Cursor spotlight */
+  .skills__group::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background: radial-gradient(
+      16rem circle at var(--mx, 50%) var(--my, 0%),
+      color-mix(in srgb, var(--palette-rose) 18%, transparent),
+      transparent 70%
+    );
+    transition: opacity 300ms var(--ease);
+  }
+
+  .skills__group:hover {
+    translate: 0 -4px;
+    border-color: var(--color-accent-strong);
+    box-shadow: 0 16px 36px color-mix(in srgb, var(--palette-magenta) 18%, transparent);
+  }
+
+  .skills__group:hover::before {
+    opacity: 1;
+  }
+
+  .skills__group h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
+  }
+
+  .skills__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+</style>

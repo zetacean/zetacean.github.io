@@ -1,0 +1,100 @@
+---
+import type { Locale } from '@/types/profile';
+import { useTranslations } from '@/i18n/ui';
+import { contact } from '@/config/site';
+import { localePath } from '@/utils/routes';
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id="contact" title={t.sections.contact} compact>
+  <div class="contact" data-reveal data-spotlight>
+    <div class="contact__text">
+      <p class="contact__lead">{t.contact.lead}</p>
+      <a class="contact__email" href={`mailto:${contact.email}`}>
+        {contact.email}
+      </a>
+    </div>
+    <div class="contact__actions">
+      <Button href={`mailto:${contact.email}`}>{t.contact.email}</Button>
+      <Button href={contact.linkedin} variant="ghost" external>
+        {t.contact.linkedin}
+      </Button>
+      {contact.github && (
+        <Button href={contact.github} variant="ghost" external>
+          {t.contact.github}
+        </Button>
+      )}
+      <Button href={localePath(locale, 'cv')} variant="ghost">
+        {t.contact.cv}
+      </Button>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .contact {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      24rem circle at var(--mx, 85%) var(--my, 0%),
+      color-mix(in srgb, var(--palette-rose) 14%, transparent),
+      transparent 70%
+    );
+  }
+
+  .contact__lead {
+    font-size: var(--text-lg);
+    line-height: 1.45;
+    max-width: 30rem;
+  }
+
+  .contact__email {
+    display: inline-block;
+    margin-top: var(--space-2);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 52rem) {
+    .contact {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--space-12);
+      padding: var(--space-8);
+    }
+
+    .contact__actions {
+      justify-content: flex-end;
+      max-width: 26rem;
+    }
+  }
+</style>

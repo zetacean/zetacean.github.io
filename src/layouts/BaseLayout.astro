@@ -1,0 +1,56 @@
+---
+import '@/styles/global.css';
+import type { Locale } from '@/types/profile';
+import { locales, useTranslations } from '@/i18n/ui';
+import { localePath } from '@/utils/routes';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  /** Path without locale, e.g. "cv". Used for canonical and hreflang links. */
+  path?: string;
+  noindex?: boolean;
+}
+
+const { locale, title, description, path = '', noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const pageTitle = title ?? t.metaTitle;
+const pageDescription = description ?? t.metaDescription;
+const canonical = new URL(localePath(locale, path), Astro.site);
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d1730" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => (
+      <link rel="alternate" hreflang={l} href={new URL(localePath(l, path), Astro.site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localePath('es', path), Astro.site)} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={t.htmlLang.replace('-', '_')} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"></div>
+    <slot />
+    <script>
+      import '@/scripts/effects';
+    </script>
+  </body>
+</html>

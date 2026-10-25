@@ -1,0 +1,37 @@
+---
+import type { Locale, Profile } from '@/types/profile';
+import { useTranslations } from '@/i18n/ui';
+import Section from '@/components/ui/Section.astro';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+}
+
+const { locale, profile } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id="about" title={t.sections.about}>
+  <div class="about">
+    {profile.about.map((paragraph, i) => (
+      <p data-reveal style={`--i:${i}`}>
+        {paragraph}
+      </p>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .about {
+    display: grid;
+    gap: var(--space-6);
+    max-width: 46rem;
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .about p:first-child {
+    color: var(--color-text);
+  }
+</style>

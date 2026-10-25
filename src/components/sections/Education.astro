@@ -1,0 +1,87 @@
+---
+import type { Locale, Profile } from '@/types/profile';
+import { useTranslations } from '@/i18n/ui';
+import Section from '@/components/ui/Section.astro';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+}
+
+const { locale, profile } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id="education" title={t.sections.education}>
+  <div class="edu">
+    <div data-reveal>
+      <h3>{t.education.degrees}</h3>
+      <ul class="edu__list">
+        {profile.education.map((e) => (
+          <li>
+            <p class="edu__program">{e.program}</p>
+            <p class="edu__meta">
+              {e.institution} · {e.period}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div data-reveal style="--i: 1">
+      <h3>{t.education.certifications}</h3>
+      <ul class="edu__list">
+        {profile.certifications.map((c) => (
+          <li>
+            <p class="edu__program">{c}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .edu {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  @media (min-width: 52rem) {
+    .edu {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-6);
+    color: var(--color-accent);
+  }
+
+  .edu__list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .edu__list li {
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--color-border-strong);
+    transition:
+      border-color 300ms var(--ease),
+      padding-left 300ms var(--ease);
+  }
+
+  .edu__list li:hover {
+    border-color: var(--color-accent);
+    padding-left: var(--space-6);
+  }
+
+  .edu__program {
+    font-weight: 500;
+  }
+
+  .edu__meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

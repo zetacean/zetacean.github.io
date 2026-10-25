@@ -1,0 +1,33 @@
+---
+---
+
+<li class="tag">
+  <slot />
+</li>
+
+<style>
+  .tag {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    cursor: default;
+    transition:
+      color var(--duration) var(--ease),
+      border-color var(--duration) var(--ease),
+      background-color var(--duration) var(--ease),
+      translate var(--duration) var(--ease);
+  }
+
+  .tag:hover {
+    color: var(--color-text);
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    translate: 0 -2px;
+  }
+</style>

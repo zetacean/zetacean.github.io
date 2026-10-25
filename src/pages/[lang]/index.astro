@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Hero from '@/components/sections/Hero.astro';
+import About from '@/components/sections/About.astro';
+import Experience from '@/components/sections/Experience.astro';
+import Skills from '@/components/sections/Skills.astro';
+import Education from '@/components/sections/Education.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { getProfile } from '@/data/profile';
+import { useTranslations } from '@/i18n/ui';
+import { localeStaticPaths } from '@/utils/routes';
+import type { Locale } from '@/types/profile';
+
+export const getStaticPaths = (() => localeStaticPaths()) satisfies GetStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+const profile = getProfile(locale);
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale}>
+  <a class="skip-link" href="#main">
+    {t.skipToContent}
+  </a>
+  <Header locale={locale} />
+  <main id="main">
+    <Hero locale={locale} profile={profile} />
+    <About locale={locale} profile={profile} />
+    <Experience locale={locale} profile={profile} />
+    <Skills locale={locale} profile={profile} />
+    <Education locale={locale} profile={profile} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: var(--space-4);
+    top: -4rem;
+    z-index: 30;
+    padding: var(--space-2) var(--space-4);
+    background: var(--palette-magenta);
+    color: var(--color-on-accent);
+    border-radius: var(--radius-sm);
+  }
+
+  .skip-link:focus {
+    top: var(--space-2);
+  }
+</style>

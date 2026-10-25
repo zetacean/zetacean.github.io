@@ -1,0 +1,223 @@
+---
+import type { Locale, Profile } from '@/types/profile';
+import { useTranslations } from '@/i18n/ui';
+import { features } from '@/config/site';
+import Section from '@/components/ui/Section.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+}
+
+const { locale, profile } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id="experience" title={t.sections.experience}>
+  <ol class="timeline">
+    {profile.experience.map((job) => (
+      <li class:list={['job', { 'job--compact': job.compact }]} data-reveal>
+        <p class="job__period">{job.period}</p>
+        <div class="job__body">
+          <h3 class="job__role">{job.role}</h3>
+          <p class="job__company">
+            {job.company}
+            {job.location && <span> · {job.location}</span>}
+          </p>
+          {job.summary && <p class="job__summary">{job.summary}</p>}
+          <ul class="job__bullets">
+            {job.bullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+          {features.metrics && job.metrics && job.metrics.length > 0 && (
+            <ul class="job__metrics">
+              {job.metrics.map((m) => (
+                <li>
+                  <strong>{m.value}</strong> {m.label}
+                </li>
+              ))}
+            </ul>
+          )}
+          <ul class="job__tags">
+            {job.tags.map((tag) => (
+              <Tag>{tag}</Tag>
+            ))}
+          </ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-12);
+    position: relative;
+  }
+
+  .job {
+    display: grid;
+    gap: var(--space-2) var(--space-8);
+    position: relative;
+  }
+
+  .job__period {
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .job__body {
+    padding-bottom: var(--space-2);
+  }
+
+  .job__role {
+    font-size: var(--text-xl);
+  }
+
+  .job__company {
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .job__summary {
+    margin-top: var(--space-3);
+    font-style: italic;
+    color: var(--color-text);
+  }
+
+  .job__bullets {
+    margin-top: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .job__bullets li {
+    position: relative;
+    padding-left: var(--space-6);
+  }
+
+  .job__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  .job__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .job__metrics strong {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .job__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .job__role {
+    transition: color var(--duration) var(--ease);
+  }
+
+  .job:hover .job__role {
+    color: var(--color-accent);
+  }
+
+  .job__bullets li::before {
+    transition: width 300ms var(--ease);
+  }
+
+  .job:hover .job__bullets li::before {
+    width: 0.95rem;
+  }
+
+  .job--compact .job__role {
+    font-size: var(--text-lg);
+  }
+
+  @media (min-width: 52rem) {
+    .job {
+      /* Period column + column gap (2rem); the dot sits in the middle of the gap. */
+      grid-template-columns: 13rem 1fr;
+    }
+
+    .job__period {
+      padding-top: 0.55rem;
+      white-space: nowrap;
+    }
+
+    .job.is-visible::before {
+      animation: ping 1.6s var(--ease) 400ms 2;
+    }
+
+    @keyframes ping {
+      0% {
+        box-shadow:
+          0 0 0 4px var(--color-bg),
+          0 0 0 4px color-mix(in srgb, var(--palette-rose) 60%, transparent);
+      }
+      100% {
+        box-shadow:
+          0 0 0 4px var(--color-bg),
+          0 0 0 14px transparent;
+      }
+    }
+
+    .job::before {
+      content: '';
+      position: absolute;
+      left: calc(14rem - 0.275rem);
+      top: 0.95rem;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: var(--color-accent-strong);
+      box-shadow: 0 0 0 4px var(--color-bg);
+      z-index: 1;
+    }
+
+    .job::after {
+      content: '';
+      position: absolute;
+      left: 14rem;
+      top: 1.5rem;
+      bottom: calc(-1 * var(--space-12) + 0.4rem);
+      width: 1px;
+      background: var(--color-border-strong);
+    }
+
+    .job:last-child::after {
+      display: none;
+    }
+
+    .job__body {
+      padding-left: 0;
+    }
+  }
+</style>

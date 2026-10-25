@@ -1,0 +1,226 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getProfile } from '@/data/profile';
+import { useTranslations } from '@/i18n/ui';
+import { contact } from '@/config/site';
+import { localePath, localeStaticPaths } from '@/utils/routes';
+import type { Locale } from '@/types/profile';
+
+export const getStaticPaths = (() => localeStaticPaths()) satisfies GetStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+const p = getProfile(locale);
+const t = useTranslations(locale);
+const title = `${p.name} — ${t.cv.title}`;
+---
+
+<BaseLayout locale={locale} title={title} path="cv" noindex>
+  <main class="cv">
+    <div class="cv__toolbar" data-no-print>
+      <a href={localePath(locale)}>← {t.cv.back}</a>
+      <button type="button" id="print-btn">
+        {t.cv.print}
+      </button>
+    </div>
+
+    <header class="cv__head">
+      <h1>{p.name}</h1>
+      <p class="cv__role">{p.role}</p>
+      <p class="cv__contact">
+        {p.location} · {contact.email} · {contact.linkedin.replace('https://www.', '')}
+      </p>
+    </header>
+
+    <section>
+      <h2>{t.cv.profile}</h2>
+      {p.about.map((para) => (
+        <p>{para}</p>
+      ))}
+    </section>
+
+    <section>
+      <h2>{t.cv.experience}</h2>
+      {p.experience.map((job) => (
+        <article class="cv__job">
+          <div class="cv__job-head">
+            <h3>
+              {job.role} — {job.company}
+            </h3>
+            <span>{job.period}</span>
+          </div>
+          <ul>
+            {job.bullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </section>
+
+    <section>
+      <h2>{t.cv.skills}</h2>
+      <ul class="cv__skills">
+        {p.skills.map((g) => (
+          <li>
+            <strong>{g.title}:</strong> {g.items.join(', ')}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>{t.cv.education}</h2>
+      <ul>
+        {p.education.map((e) => (
+          <li>
+            {e.program} — {e.institution} ({e.period})
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>{t.cv.certifications}</h2>
+      <ul>
+        {p.certifications.map((c) => (
+          <li>{c}</li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  document.getElementById('print-btn')?.addEventListener('click', () => window.print());
+</script>
+
+<style is:global>
+  .cv {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: var(--space-8) var(--gutter) var(--space-16);
+    font-size: var(--text-sm);
+  }
+
+  .cv__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .cv__toolbar button {
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 0;
+    background: var(--palette-magenta);
+    color: var(--color-on-accent);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .cv h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .cv__role {
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-top: var(--space-1);
+  }
+
+  .cv__contact {
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+  }
+
+  .cv section {
+    margin-top: var(--space-8);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .cv h2 {
+    font-size: var(--text-lg);
+    padding-bottom: var(--space-1);
+    border-bottom: 1px solid var(--color-border-strong);
+  }
+
+  .cv h3 {
+    font-size: var(--text-base);
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+
+  .cv__job {
+    margin-top: var(--space-2);
+  }
+
+  .cv__job-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-4);
+  }
+
+  .cv__job-head span {
+    color: var(--color-text-muted);
+  }
+
+  .cv ul {
+    padding-left: 1.1rem;
+    list-style: disc;
+    display: grid;
+    gap: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  .cv__skills {
+    list-style: none;
+    padding: 0;
+  }
+
+  @media print {
+    @page {
+      margin: 14mm;
+    }
+
+    html {
+      color-scheme: light;
+    }
+
+    body,
+    .cv {
+      background: #fff;
+      color: #111;
+      font-size: 10pt;
+    }
+
+    .cv {
+      max-width: none;
+      padding: 0;
+    }
+
+    [data-no-print] {
+      display: none;
+    }
+
+    .cv__role,
+    .cv h2,
+    .cv__contact,
+    .cv__job-head span,
+    .cv ul {
+      color: #333;
+    }
+
+    .cv h2 {
+      border-color: #999;
+    }
+
+    .cv__job {
+      break-inside: avoid;
+    }
+  }
+</style>

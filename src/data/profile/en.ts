@@ -1,0 +1,186 @@
+﻿import type { Profile } from '@/types/profile';
+
+export const profileEn: Profile = {
+  name: 'Gustavo López',
+  role: 'Senior SDET · Test Automation Engineer',
+  location: 'Bogotá, Colombia',
+  tagline:
+    'I build quality into the development lifecycle: testing platforms, automation frameworks and CI/CD pipelines that reduce production risk and speed up releases.',
+  about: [
+    'Software Development Engineer in Test (SDET) with 7 years of experience designing end-to-end quality strategies and scalable testing platforms for web, API and mobile applications.',
+    'I have led the design and implementation of testing frameworks, internal tools and automation solutions aimed at reducing production risk and improving software reliability, including performance testing and RPA/Web Scraping projects.',
+    'Having contributed to both backend and frontend development, I approach quality from a well-rounded technical perspective. I also add value through mentoring, defining best practices and coaching teams to raise their quality maturity, well beyond test execution.',
+  ],
+  highlights: [
+    { value: '7+', label: 'years in software quality and automation' },
+    { value: '8', label: 'organizations where I have driven quality' },
+    { value: '3', label: 'platforms covered: web, API and mobile, plus performance' },
+    { value: '3', label: 'day-to-day languages: Python, C# and Java' },
+  ],
+  experience: [
+    {
+      company: 'Apiux Tech',
+      role: 'Senior QA Automation Engineer | SDET',
+      period: 'Mar 2025 — Present',
+      summary: 'Leading UI and backend test automation and bringing AI into test design.',
+      bullets: [
+        'Built the backend test automation framework from scratch.',
+        'Defined a new structure for automated UI test cases.',
+        'Created skills and an AI agent for test case design in VS Code with GitHub Copilot.',
+        'Automated functional testing with Robot Framework.',
+        'Performed manual and functional testing, and tracked and managed bugs during UAT.',
+      ],
+      tags: ['Robot Framework', 'Python', 'GitHub Copilot', 'API Testing'],
+    },
+    {
+      company: 'Indra',
+      role: 'QA Automation — Senior Consultant',
+      period: 'Dec 2024 — Feb 2025',
+      summary: 'Technical training for teams on service testing and testing tools.',
+      bullets: [
+        'Trained the team on backend testing: HTTP methods, REST APIs and status codes.',
+        'Delivered training on automated backend testing with Postman.',
+        'Trained on Jira testing tools.',
+      ],
+      tags: ['Postman', 'REST', 'Jira'],
+    },
+    {
+      company: 'Simetrik',
+      role: 'QA Engineer',
+      period: 'Jun 2024 — Nov 2024',
+      summary: 'UI and backend test automation.',
+      bullets: [
+        'Designed and implemented a web testing framework with Playwright and Pytest.',
+        'Automated UI tests with Behave, Selenium and Pytest, and backend tests with Requests and Pytest.',
+        'Designed functional test cases in TestRail.',
+        'Maintained the backend testing framework and coached the team on development best practices.',
+      ],
+      tags: ['Playwright', 'Pytest', 'Selenium', 'Behave', 'TestRail'],
+    },
+    {
+      company: 'Imagemaker',
+      role: 'Senior QA Automation Engineer',
+      period: 'Dec 2022 — Jun 2024',
+      summary: 'Automation, internal tooling and QA process improvement.',
+      bullets: [
+        'Designed, built and ran automated tests with Robot Framework and service tests with Postman.',
+        'Integrated Jira and Azure DevOps with Robot Framework and Python.',
+        'Built tools to streamline quality processes and drove continuous improvement of the QA area.',
+        'Supported CI/CD adoption across the different delivery squads.',
+        'Contributed to an internal RPA / Web Scraping application.',
+        'Automated web tests with Cucumber, Java and JUnit, and supported accessibility testing on Android and iOS.',
+        'Mentored the testing team technically, promoted development best practices and took part in technical hiring interviews.',
+      ],
+      tags: ['Robot Framework', 'Postman', 'Java', 'Cucumber', 'Azure DevOps', 'RPA'],
+    },
+    {
+      company: 'Hexacta',
+      role: 'Semi-Senior Automation Tester | SDET',
+      period: 'Apr 2022 — Dec 2022',
+      location: 'Bogotá, Colombia',
+      summary: 'Full-stack profile focused on performance and service quality.',
+      bullets: [
+        'Created load tests with Locust and Python.',
+        'Automated service tests with Postman.',
+        'Developed the project APIs (ASP.NET Core) and frontend (Angular).',
+        'Built data transformation flows with Azure Data Factory.',
+      ],
+      tags: ['Locust', 'Python', 'ASP.NET Core', 'Angular', 'Azure Data Factory'],
+    },
+    {
+      company: 'NTT Data Europe & Latam',
+      role: 'Consultant — Automation Tester',
+      period: 'Mar 2021 — Mar 2022',
+      bullets: [
+        'Designed and ran automated tests with Robot Framework; mobile testing with Appium and web with Selenium.',
+        'Built automation support tools in Java, C# and Python.',
+        'Migrated and maintained existing robots and improved the automation tooling.',
+        'Maintained the testing area CI/CD pipelines in Azure Pipelines.',
+        'Provided technical support and training on the tools developed.',
+      ],
+      tags: ['Robot Framework', 'Appium', 'Selenium', 'Azure Pipelines'],
+      compact: true,
+    },
+    {
+      company: 'Complemento 360',
+      role: 'Test Automation Engineer',
+      period: 'Oct 2020 — Feb 2021',
+      bullets: [
+        'Designed and ran automated test cases with Robot Framework, Appium (mobile) and Selenium (web).',
+        'Built automation support tools in Java, C# and Python.',
+      ],
+      tags: ['Robot Framework', 'Appium', 'Selenium'],
+      compact: true,
+    },
+    {
+      company: 'Primestone',
+      role: 'Test Analyst & Automation Engineer',
+      period: 'Jul 2019 — Oct 2020',
+      summary: 'Early career: from internship to automation engineer.',
+      bullets: [
+        'Planned, designed and ran functional tests, including tests in AWS environments.',
+        'Maintained a C# framework with SpecFlow and designed a new one in Python with Cucumber.',
+      ],
+      tags: ['C#', 'SpecFlow', 'Python', 'Cucumber', 'AWS'],
+      compact: true,
+    },
+  ],
+  skills: [
+    {
+      title: 'Test automation',
+      items: [
+        'Playwright',
+        'Robot Framework',
+        'Pytest',
+        'Selenium',
+        'Appium',
+        'Behave',
+        'Cucumber',
+        'SpecFlow',
+        'JUnit',
+      ],
+    },
+    { title: 'Languages', items: ['Python', 'C#', 'Java'] },
+    {
+      title: 'APIs & performance',
+      items: ['Postman', 'Requests', 'REST', 'Locust'],
+    },
+    {
+      title: 'CI/CD & cloud',
+      items: ['Jenkins', 'Azure DevOps', 'Azure Pipelines', 'AWS', 'Azure Data Factory'],
+    },
+    {
+      title: 'Development',
+      items: ['ASP.NET Core', 'Angular', 'RPA / Web Scraping'],
+    },
+    {
+      title: 'AI & quality management',
+      items: ['MCP', 'GitHub Copilot', 'Jira', 'TestRail', 'Scrum'],
+    },
+  ],
+  education: [
+    {
+      institution: 'Fundación Universitaria Internacional de La Rioja (UNIR)',
+      program: 'B.Sc. in Computer Engineering',
+      period: '2024 — 2026',
+    },
+    {
+      institution: 'SENA',
+      program: 'Associate degree in Information Systems Analysis and Development',
+      period: '2021 — 2023',
+    },
+    {
+      institution: 'SENA',
+      program: 'Technical diploma in Software Programming',
+      period: '2019 — 2020',
+    },
+  ],
+  certifications: [
+    'Scrum Fundamentals Certified (SFC)',
+    'Azure DevOps: Introduction to CI/CD with Visual Studio',
+    'Using Python to Access Web Data',
+    'Python for Data Science',
+    'Full Stack C# .NET course',
+  ],
+  languages: ['Spanish (native)'],
+};
